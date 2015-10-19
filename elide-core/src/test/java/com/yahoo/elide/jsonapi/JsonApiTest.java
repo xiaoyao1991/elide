@@ -21,7 +21,6 @@ import com.yahoo.elide.security.User;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.google.common.collect.Sets;
-
 import example.Child;
 import example.Parent;
 import org.testng.annotations.BeforeTest;
@@ -45,7 +44,6 @@ public class JsonApiTest {
         EntityDictionary dictionary = new EntityDictionary();
         dictionary.bindEntity(Parent.class);
         dictionary.bindEntity(Child.class);
-        dictionary.bindInitializer(Parent::doInit, Parent.class);
         mapper = new JsonApiMapper(dictionary);
         userScope = new RequestScope(new JsonApiDocument(), null, new User(0), dictionary, mapper);
     }
