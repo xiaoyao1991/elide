@@ -2,8 +2,6 @@ package com.yahoo.elide.dbmanagers.hibernate3;
 
 import org.testng.annotations.Test;
 
-import static org.testng.Assert.*;
-
 public class HibernateManagerTest {
     // TODO: Create tests for our manager
     @Test

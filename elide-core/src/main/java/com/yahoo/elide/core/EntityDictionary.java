@@ -23,6 +23,7 @@ import java.lang.reflect.Type;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -73,6 +74,10 @@ public class EntityDictionary {
      */
     public String getBinding(Class<?> entityClass) {
         return entity(entityClass).jsonApi;
+    }
+
+    public Set<Class<?>> getBindings() {
+        return entityBindings.keySet();
     }
 
     /**
@@ -520,7 +525,7 @@ public class EntityDictionary {
         throw new NoSuchMethodException(name);
     }
 
-    static Class<?> lookupEntityClass(Class<?> objClass) {
+    public static Class<?> lookupEntityClass(Class<?> objClass) {
         for (Class<?> cls = objClass; cls != null; cls = cls.getSuperclass()) {
             if (cls.isAnnotationPresent(Entity.class)) {
                 return cls;

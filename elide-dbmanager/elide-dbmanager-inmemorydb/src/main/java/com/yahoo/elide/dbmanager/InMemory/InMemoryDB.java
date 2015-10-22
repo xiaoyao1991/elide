@@ -8,7 +8,7 @@ package com.yahoo.elide.dbmanager.InMemory;
 import com.yahoo.elide.core.DatabaseManager;
 import com.yahoo.elide.core.DatabaseTransaction;
 import com.yahoo.elide.core.EntityDictionary;
-import com.yahoo.elide.core.exceptions.InvalidAttributeException;
+import com.yahoo.elide.core.PersistentResource;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -154,75 +154,55 @@ public class InMemoryDB extends DatabaseManager {
                 return value;
             }
 
-            if (float.class.isAssignableFrom(fieldClass) && value instanceof Number) {
-                return ((Number) value).floatValue();
+            if (short.class.isAssignableFrom(fieldClass) && value instanceof String) {
+                return Short.valueOf((String) value);
             }
 
-            if (double.class.isAssignableFrom(fieldClass) && value instanceof Number) {
-                return ((Number) value).doubleValue();
+            if (byte.class.isAssignableFrom(fieldClass) && value instanceof String) {
+                return Byte.valueOf((String) value);
             }
 
-            if (int.class.isAssignableFrom(fieldClass) && value instanceof Number) {
-                return ((Number) value).intValue();
+            if (float.class.isAssignableFrom(fieldClass) && value instanceof String) {
+                return Float.valueOf((String) value);
+            }
+
+            if (double.class.isAssignableFrom(fieldClass) && value instanceof String) {
+                return Double.valueOf((String) value);
             }
 
             if (int.class.isAssignableFrom(fieldClass) && value instanceof String) {
                 return Integer.valueOf((String) value);
             }
 
-            if (long.class.isAssignableFrom(fieldClass) && value instanceof Number) {
-                return ((Number) value).longValue();
-            }
-
-            if (boolean.class.isAssignableFrom(fieldClass) && value instanceof Boolean) {
-                return value;
-            }
-
-            if (Float.class.isAssignableFrom(fieldClass) && value instanceof Number) {
-                return ((Number) value).floatValue();
-            }
-
-            if (Double.class.isAssignableFrom(fieldClass) && value instanceof Number) {
-                return ((Number) value).doubleValue();
-            }
-
-            if (Integer.class.isAssignableFrom(fieldClass) && value instanceof Number) {
-                return ((Number) value).intValue();
-            }
-
-            if (Long.class.isAssignableFrom(fieldClass) && value instanceof Number) {
-                return ((Number) value).longValue();
-            }
-
             if (long.class.isAssignableFrom(fieldClass) && value instanceof String) {
-                return Long.parseLong((String) value);
+                return Long.valueOf((String) value);
+            }
+
+            if (Short.class.isAssignableFrom(fieldClass) && value instanceof String) {
+                return Short.valueOf((String) value);
+            }
+
+            if (Byte.class.isAssignableFrom(fieldClass) && value instanceof String) {
+                return Byte.valueOf((String) value);
+            }
+
+            if (Float.class.isAssignableFrom(fieldClass) && value instanceof String) {
+                return Float.valueOf((String) value);
+            }
+
+            if (Double.class.isAssignableFrom(fieldClass) && value instanceof String) {
+                return Double.valueOf((String) value);
+            }
+
+            if (Integer.class.isAssignableFrom(fieldClass) && value instanceof String) {
+                return Integer.valueOf((String) value);
             }
 
             if (Long.class.isAssignableFrom(fieldClass) && value instanceof String) {
-                return Long.parseLong((String) value);
+                return Long.valueOf((String) value);
             }
 
-            if (Enum.class.isAssignableFrom(fieldClass) && value instanceof String) {
-                try {
-                    @SuppressWarnings({ "unchecked", "rawtypes" })
-                    Enum e = Enum.valueOf((Class<Enum>) fieldClass, (String) value);
-                    return e;
-                } catch (IllegalArgumentException e) {
-                    throw new InvalidAttributeException("Unknown " + fieldClass.getSimpleName() + " value " + value);
-                }
-            }
-
-            if (Enum.class.isAssignableFrom(fieldClass) && value instanceof Integer) {
-                try {
-                    // call Enum.values()
-                    Object[] values = (Object[]) fieldClass.getMethod("values").invoke(null, (Object[]) null);
-                    return values[(Integer) value];
-                } catch (IndexOutOfBoundsException | ReflectiveOperationException e) {
-                    throw new InvalidAttributeException("Unknown " + fieldClass.getSimpleName() + " value " + value);
-                }
-            }
-
-            throw new IllegalArgumentException("Unable to coerce " + value.getClass() + " to " + fieldClass);
+            return PersistentResource.coerce(value, fieldClass);
         }
 
         @Override

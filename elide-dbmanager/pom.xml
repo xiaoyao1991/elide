@@ -56,5 +56,6 @@
         <module>elide-dbmanager-hibernate5</module>
         <module>elide-dbmanager-hibernate3</module>
         <module>elide-dbmanager-inmemorydb</module>
+        <module>elide-dbmanager-multiplex</module>
     </modules>
 </project>
